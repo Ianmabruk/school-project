@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { get } from '../services/api';
+import FeaturedVideo from '../components/FeaturedVideo';
 import './Home.css';
 
 export default function Home() {
   const [services, setServices] = useState([]);
   const [posts, setPosts] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
+  const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -17,12 +19,14 @@ export default function Home() {
     Promise.all([
       get('/api/services'),
       get('/api/blog?status=published'),
-      get('/api/testimonials')
+      get('/api/testimonials'),
+      get('/api/site-settings')
     ])
-      .then(([svc, blog, test]) => {
+      .then(([svc, blog, test, siteSettings]) => {
         setServices(svc);
         setPosts(blog.slice(0, 3));
         setTestimonials(test);
+        setSettings(siteSettings);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -51,6 +55,10 @@ export default function Home() {
                 onLoad={() => setImageLoaded(true)}
                 onError={() => setImageError(true)}
                 loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                width="560"
+                height="420"
               />
             ) : (
               <div className="hero-placeholder">
@@ -121,18 +129,26 @@ export default function Home() {
 
       <section className="section video">
         <div className="container">
-          <h2>See Our Work In Action</h2>
-          <p className="section-subtitle">Watch how we transform brands through digital marketing.</p>
-          <div className="video-placeholder">
-            <div className="video-box">
-               <svg viewBox="0 0 600 340" fill="none">
-                  <rect width="600" height="340" fill="var(--vanilla)" rx="12"/>
-                  <circle cx="300" cy="170" r="40" fill="var(--text)" opacity="0.08"/>
-                  <polygon points="292,155 292,185 315,170" fill="var(--text)" opacity="0.2"/>
-                </svg>
-              <p className="video-text">Promotional Video Coming Soon</p>
+          <h2>Learn About Digital Marketing</h2>
+          <p className="section-subtitle">Watch a quick introduction to the fundamentals of digital marketing.</p>
+          {settings && settings.featured_video_url ? (
+            <FeaturedVideo
+              title={settings.featured_video_title}
+              description={settings.featured_video_description}
+              youtubeUrl={settings.featured_video_url}
+            />
+          ) : (
+            <div className="video-placeholder">
+              <div className="video-box">
+                 <svg viewBox="0 0 600 340" fill="none">
+                    <rect width="600" height="340" fill="var(--vanilla)" rx="12"/>
+                    <circle cx="300" cy="170" r="40" fill="var(--text)" opacity="0.08"/>
+                    <polygon points="292,155 292,185 315,170" fill="var(--text)" opacity="0.2"/>
+                  </svg>
+                <p className="video-text">Promotional Video Coming Soon</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -190,9 +206,9 @@ export default function Home() {
       <section className="section cta">
         <div className="container">
           <div className="cta-box">
-            <h2>Ready to Grow Your Brand?</h2>
-            <p>Let's discuss how we can help you achieve your digital marketing goals.</p>
-            <Link to="/contact" className="btn-primary">Start The Conversation</Link>
+            <h2>Ready to Transform Your Digital Presence?</h2>
+            <p>Let's discuss how our services can help you achieve your goals.</p>
+            <Link to="/contact" className="btn-primary">Get Started</Link>
           </div>
         </div>
       </section>

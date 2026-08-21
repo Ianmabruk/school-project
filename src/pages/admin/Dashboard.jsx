@@ -1,24 +1,35 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { get } from '../../services/api';
+import FeaturedVideo from '../../components/FeaturedVideo';
 import './Dashboard.css';
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
   const [recentPosts, setRecentPosts] = useState([]);
+  const [upcoming, setUpcoming] = useState([]);
+  const [settings, setSettings] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
     Promise.all([
       get('/api/analytics'),
-      get('/api/blog/all')
+      get('/api/blog/all'),
+      get('/api/calendar/upcoming'),
+      get('/api/site-settings')
     ])
-      .then(([analytics, posts]) => {
-        setStats(analytics);
-        setRecentPosts(posts.slice(0, 5));
-        setLoading(false);
+      .then(([analytics, posts, upcomingData, siteSettings]) => {
+        if (!cancelled) {
+          setStats(analytics);
+          setRecentPosts(posts.slice(0, 5));
+          setUpcoming(upcomingData);
+          setSettings(siteSettings);
+          setLoading(false);
+        }
       })
-      .catch(() => setLoading(false));
+      .catch(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
   }, []);
 
   if (loading) return <div className="loading">Loading dashboard...</div>;
@@ -45,6 +56,48 @@ export default function Dashboard() {
           </Link>
         ))}
       </div>
+
+      {settings && settings.featured_video_url && (
+        <div className="dashboard-section">
+          <h2>Featured Learning Video</h2>
+          <FeaturedVideo
+            title={settings.featured_video_title}
+            description={settings.featured_video_description}
+            youtubeUrl={settings.featured_video_url}
+          />
+        </div>
+      )}
+
+      {upcoming.length > 0 && (
+        <div className="dashboard-section">
+          <h2>Upcoming Content</h2>
+          <div className="upcoming-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Content</th>
+                  <th>Platform</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {upcoming.slice(0, 5).map(item => (
+                  <tr key={item.id}>
+                    <td>{item.scheduled_date ? new Date(item.scheduled_date + 'T00:00:00').toLocaleDateString() : '-'}</td>
+                    <td>{item.title}</td>
+                    <td>{item.platform}</td>
+                    <td>
+                      <span className={`status-badge status-${item.status}`}>{item.status}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <Link to="/admin/calendar" className="dashboard-more-link">View Calendar →</Link>
+        </div>
+      )}
 
       <div className="dashboard-section">
         <h2>Recent Blog Posts</h2>

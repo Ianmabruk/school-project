@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { get, put } from '../../services/api';
 import './AdminSettings.css';
 
 export default function AdminSettings() {
@@ -8,20 +9,47 @@ export default function AdminSettings() {
     analyticsId: '',
     contactEmail: 'hello@nova360digital.com',
     contactPhone: '+254 700 000 000',
-    location: 'Nairobi, Kenya'
+    location: 'Nairobi, Kenya',
+    featured_video_url: '',
+    featured_video_title: '',
+    featured_video_description: ''
   });
   const [message, setMessage] = useState('');
 
+  useEffect(() => {
+    get('/api/site-settings')
+      .then(data => {
+        if (data) {
+          setSettings(prev => ({
+            ...prev,
+            featured_video_url: data.featured_video_url || '',
+            featured_video_title: data.featured_video_title || '',
+            featured_video_description: data.featured_video_description || ''
+          }));
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   const handleSave = async () => {
-    setMessage('Settings saved (local state)');
-    setTimeout(() => setMessage(''), 3000);
+    try {
+      await put('/api/site-settings', {
+        featured_video_url: settings.featured_video_url,
+        featured_video_title: settings.featured_video_title,
+        featured_video_description: settings.featured_video_description
+      });
+      setMessage('Settings saved successfully');
+      setTimeout(() => setMessage(''), 3000);
+    } catch (err) {
+      setMessage(err.message);
+    }
   };
 
   return (
     <div className="admin-page">
       <h1>Settings</h1>
       <p className="admin-subtitle">Manage website configuration.</p>
-      {message && <div className="success">{message}</div>}
+      {message && <div className={message.includes('success') || message.includes('saved') ? 'success' : 'error'}>{message}</div>}
 
       <div className="settings-section">
         <h2>General</h2>
@@ -57,6 +85,22 @@ export default function AdminSettings() {
         <div className="form-group">
           <label>Location</label>
           <input value={settings.location} onChange={e => setSettings({ ...settings, location: e.target.value })} />
+        </div>
+      </div>
+
+      <div className="settings-section">
+        <h2>Featured Video</h2>
+        <div className="form-group">
+          <label>YouTube Video URL</label>
+          <input value={settings.featured_video_url} onChange={e => setSettings({ ...settings, featured_video_url: e.target.value })} placeholder="https://youtu.be/..." />
+        </div>
+        <div className="form-group">
+          <label>Video Title</label>
+          <input value={settings.featured_video_title} onChange={e => setSettings({ ...settings, featured_video_title: e.target.value })} />
+        </div>
+        <div className="form-group">
+          <label>Video Description</label>
+          <textarea value={settings.featured_video_description} onChange={e => setSettings({ ...settings, featured_video_description: e.target.value })} rows={2} />
         </div>
       </div>
 

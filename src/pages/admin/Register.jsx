@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { post } from '../../services/api';
 import './Login.css';
 
 export default function Register() {
@@ -14,13 +15,7 @@ export default function Register() {
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Registration failed');
+      await post('/api/auth/register', form);
       navigate('/admin/login');
     } catch (err) {
       setError(err.message);

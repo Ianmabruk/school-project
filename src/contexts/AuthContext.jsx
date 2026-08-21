@@ -1,7 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 const AuthContext = createContext(null);
 
@@ -42,7 +42,7 @@ export function AuthProvider({ children }) {
         })
         .finally(() => { if (!cancelled) setLoading(false); });
     } else {
-      setLoading(false);
+      Promise.resolve().then(() => { if (!cancelled) setLoading(false); });
     }
     return () => { cancelled = true; };
   }, []);

@@ -24,6 +24,15 @@
   line-height: 1.7;
 }
 
+.blog-video-section {
+  padding: 0 0 60px;
+  background-color: var(--white);
+}
+
+.blog-video-section .container {
+  max-width: 800px;
+}
+
 .blog-list {
   padding: 100px 0;
   background-color: var(--vanilla);

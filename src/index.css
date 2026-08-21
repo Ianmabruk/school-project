@@ -41,7 +41,7 @@ a:hover {
 button {
   cursor: pointer;
   border: none;
-  border-radius: 18px;
+  border-radius: 12px;
   padding: 12px 24px;
   font-size: 0.95rem;
   font-weight: 500;

@@ -49,6 +49,11 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads')));
 
+const clientBuildPath = path.join(__dirname, '..', 'dist');
+if (fs.existsSync(clientBuildPath)) {
+  app.use(express.static(clientBuildPath));
+}
+
 function generateToken(user) {
   return jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, {
     expiresIn: TOKEN_EXPIRY
@@ -166,9 +171,18 @@ db.serialize(() => {
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
   )`);
 
+  db.run(`CREATE TABLE IF NOT EXISTS site_settings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    featured_video_url TEXT,
+    featured_video_title TEXT,
+    featured_video_description TEXT,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
+
   db.run(`CREATE TABLE IF NOT EXISTS content_calendar (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
+    description TEXT,
     platform TEXT NOT NULL,
     content_type TEXT NOT NULL,
     caption TEXT,
@@ -178,8 +192,10 @@ db.serialize(() => {
     campaign TEXT,
     status TEXT DEFAULT 'idea',
     media_url TEXT,
-    notes TEXT,
+    video_url TEXT,
+    blog_id INTEGER,
     cta TEXT,
+    notes TEXT,
     target_audience TEXT,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -270,7 +286,7 @@ db.serialize(() => {
         [
           'How to Build a Winning Social Media Content Calendar',
           'build-winning-social-media-content-calendar',
-          '<h2>Why Your Brand Needs a Content Calendar</h2><p>A content calendar is not just an organizational tool — it is a strategic asset that ensures consistency, aligns your team, and helps you plan campaigns around key business dates. Without a calendar, social media becomes reactive rather than intentional. Posts are created at the last minute, messaging is inconsistent, and opportunities to capitalize on trending moments are missed.</p><p>The most successful brands on social media plan weeks or even months ahead. They know what they are publishing, when they are publishing it, and why. This article walks you through the process of building a content calendar that drives real engagement and supports your broader marketing objectives.</p><h2>Step 1: Audit Your Current Presence</h2><p>Before building a new calendar, understand what you already have. Review your past six months of social media performance. Which posts performed best? Which platforms drive the most engagement? What content types — images, videos, carousels, stories — resonate most with your audience?</p><p>Use platform-native analytics tools and third-party dashboards to gather this data. Look for patterns in posting times, content themes, and audience demographics. This audit becomes the foundation of your calendar strategy.</p><h2>Step 2: Define Your Content Pillars</h2><p>Content pillars are the main themes that define your brand\'s social media presence. For a digital marketing agency, these might include educational content, client success stories, team spotlights, industry news commentary, and promotional offers. Each pillar should align with your audience\'s interests and your business goals.</p><p>Limit yourself to three to five pillars. Too many themes dilute your message; too few make your feed repetitive. Assign each pillar a rough percentage of your total content — for example, 40 percent educational, 20 percent promotional, 20 percent community-focused, and 20 percent entertainment.</p><h2>Step 3: Map Key Dates and Campaigns</h2><p>Identify the dates that matter to your business and industry. These include product launches, seasonal promotions, industry events, holidays, and cultural moments relevant to your audience. Map these dates on a monthly or quarterly view and assign content themes around them.</p><p>For example, a digital marketing agency might plan content around "Digital Marketing Month" in October, Black Friday in November, and New Year strategy sessions in January. Each campaign should have a clear objective, key message, and success metric.</p><h2>Step 4: Choose the Right Format for Each Platform</h2><p>Each social platform has its own content preferences. Instagram rewards high-quality visuals and Reels. LinkedIn performs best with professional insights and long-form articles. TikTok thrives on authentic, trending content. Facebook supports community discussions and events. YouTube is the platform for deep-dive tutorials and vlogs.</p><p>Your calendar should reflect these differences. A single campaign idea might be expressed as a carousel post on Instagram, a short video on TikTok, a detailed article on LinkedIn, and a discussion prompt on Facebook. Repurposing content across platforms saves time while maximizing reach.</p><h2>Step 5: Establish a Posting Cadence</h2><p>Consistency matters more than frequency. It is better to post three high-quality times per week than to post low-quality content daily. Determine the optimal posting frequency for each platform based on your audience\'s behavior and your team\'s capacity. Create a realistic schedule that you can maintain over the long term.</p><p>Use scheduling tools like Buffer, Hootsuite, or Later to automate publishing. These tools allow you to batch-create content, schedule it for optimal times, and maintain a consistent presence even during busy periods.</p><h2>Step 6: Measure, Learn, and Iterate</h2><p>A content calendar is a living document, not a static plan. Review your performance metrics weekly and adjust your calendar accordingly. If a particular content type or posting time drives exceptional engagement, incorporate more of it. If a theme falls flat, replace it with something else.</p><p>At Nova360 Digital, we manage content calendars for clients across multiple industries. Our data-driven approach ensures that every piece of content serves a purpose and contributes to measurable business outcomes. <a href="/contact">Contact us</a> to learn how we can help your brand build a winning social media strategy.</p>',
+          '<h2>Why Your Brand Needs a Content Calendar</h2><p>A content calendar is not just an organizational tool — it is a strategic asset that ensures consistency, aligns your team, and helps you plan campaigns around key business dates. Without a calendar, social media becomes reactive rather than intentional. Posts are created at the last minute, messaging is inconsistent, and opportunities to capitalize on trending moments are missed.</p><p>The most successful brands on social media plan weeks or even months ahead. They know what they are publishing, when they are publishing it, and why. This article walks you through the process of building a content calendar that drives real engagement and supports your broader marketing objectives.</p><h2>Step 1: Audit Your Current Presence</h2><p>Before building a new calendar, understand what you already have. Review your past six months of social media performance. Which posts performed best? Which platforms drive the most engagement? What content types — images, videos, carousels, stories — resonate most with your audience?</p><p>Use platform-native analytics tools and third-party dashboards to gather this data. Look for patterns in posting times, content themes, and audience demographics. This audit becomes the foundation of your calendar strategy.</p><h2>Step 2: Define Your Content Pillars</h2><p>Content pillars are the main themes that define your brand\'s social media presence. For a digital marketing agency, these might include educational content, client success stories, team spotlights, industry news commentary, and promotional offers. Each pillar should align with your audience\'s interests and your business goals.</p><p>Limit yourself to three to five pillars. Too many themes dilute your message; too few make your feed repetitive. Assign each pillar a rough percentage of your total content — for example, 40 percent educational, 20 percent promotional, 20 percent community-focused, and 20 percent entertainment....',
           'Learn how to create an effective social media content calendar that drives engagement. Covers content pillars, platform strategy, posting cadence, and performance measurement.',
           'Social Media',
           '["social media","content calendar","planning","content strategy","engagement"]',
@@ -280,6 +296,20 @@ db.serialize(() => {
           'How to Build a Winning Social Media Content Calendar',
           'A complete guide to creating a social media content calendar that drives engagement and supports your marketing goals.',
           'social media, content calendar, planning, content strategy',
+          now
+        ],
+        [
+          'What Is Digital Marketing? A Beginner\'s Guide',
+          'what-is-digital-marketing-beginners-guide',
+          '<h2>What Digital Marketing Actually Means</h2><p>Digital marketing is the practice of promoting products, services, or brands through online channels. Instead of relying solely on billboards, radio, or print ads, businesses now use websites, search engines, social media, email, and mobile apps to reach their audiences. The goal remains the same as traditional marketing — connect with the right people at the right time — but the tools and methods have evolved dramatically.</p><p>For beginners, think of digital marketing as any marketing effort that uses the internet or an electronic device. This includes everything from a Google search result to an Instagram post, from a promotional email to a YouTube tutorial. The key advantage is measurability: every click, view, and conversion can be tracked, analyzed, and optimized.</p><h2>Why Businesses Use Digital Marketing</h2><p>Businesses choose digital marketing because it offers precise targeting, real-time feedback, and often lower costs compared to traditional advertising. A small business in Nairobi can reach customers across Kenya — or around the world — with a well-crafted Facebook campaign or a search-engine-optimized website. Digital marketing also levels the playing field, allowing small brands to compete with larger companies by focusing on niche audiences and authentic storytelling.</p><h2>The Main Channels</h2><p>Search engines like Google are often the first stop for customers looking for solutions. Search engine optimization, or SEO, helps your website appear in those results organically. Social media platforms such as Instagram, LinkedIn, TikTok, and Facebook let brands build communities, share stories, and advertise to specific demographics. Email marketing remains one of the most effective channels for nurturing leads and retaining customers. Content marketing — blogs, videos, podcasts — builds trust by educating audiences rather than just selling to them. Online advertising through Google Ads or social platforms provides immediate visibility and measurable return on investment.</p><h2>Analytics and Optimization</h2><p>One of the greatest strengths of digital marketing is data. Tools like Google Analytics reveal where visitors come from, which pages they visit, and whether they complete desired actions. This data lets marketers refine campaigns continuously. If an email subject line performs poorly, it can be tested again. If a blog post drives traffic but no conversions, the call to action can be improved. Digital marketing is never truly finished; it is an ongoing cycle of planning, executing, measuring, and improving.</p><h2>How Beginners Can Start</h2><p>Start by learning one channel deeply rather than trying to master everything at once. If you enjoy writing, begin with a blog and learn SEO. If you are comfortable on camera, experiment with YouTube or TikTok. Follow industry blogs, take free online courses, and practice by managing a small project — perhaps for a friend\'s business or a student organization. Small, consistent actions build the skills and portfolio that lead to bigger opportunities.</p><p><strong>Ready to dive deeper?</strong> <a href="/services">Explore our digital marketing services</a> or <a href="/contact">contact Nova360 Digital</a> for a free consultation.</p>',
+          'Digital Marketing',
+          '["digital marketing","beginners","SEO","social media","content marketing"]',
+          'Nova360 Team',
+          'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80',
+          'published',
+          'What Is Digital Marketing? A Beginner\'s Guide',
+          'A clear, beginner-friendly explanation of digital marketing, its main channels, and how to get started.',
+          'digital marketing for beginners, what is digital marketing, SEO, social media, content marketing',
           now
         ]
       ];
@@ -341,17 +371,27 @@ db.serialize(() => {
       const baseDate = `${yyyy}-${mm}-${dd}`;
       
       const calendarItems = [
-        ['Monday Morning Motivation', 'Instagram', 'Post', 'Start your week with purpose!', '#MondayMotivation #DigitalMarketing', baseDate, '09:00', 'Q1 Brand Awareness', 'scheduled', '', 'Engage with comments', 'Follow for more tips', 'Small Business Owners'],
-        ['SEO Tips Tuesday', 'LinkedIn', 'Post', '5 SEO tips that will boost your rankings this week.', '#SEO #SearchEngineOptimization #Marketing', baseDate, '10:00', 'Q1 Brand Awareness', 'scheduled', '', 'Share in comments', 'Learn more', 'Marketing Professionals'],
-        ['Client Success Story', 'Facebook', 'Post', 'See how we helped TechStart Kenya grow 300%.', '#SuccessStory #ClientLove #DigitalMarketing', baseDate, '14:00', 'Q1 Brand Awareness', 'scheduled', '', 'Tag a friend who needs this', 'Get started', 'Entrepreneurs'],
-        ['Quick Reel: Behind the Scenes', 'Instagram', 'Reel', 'A day in the life at Nova360 Digital.', '#BehindTheScenes #AgencyLife #Reels', baseDate, '16:00', 'Q1 Brand Awareness', 'scheduled', '', 'Follow our journey', 'Join us', 'Young Professionals'],
-        ['Wednesday Wisdom', 'TikTok', 'Video', 'Why your brand needs a content calendar.', '#MarketingTips #ContentCalendar #SmallBiz', baseDate, '11:00', 'Q1 Brand Awareness', 'scheduled', '', 'Duet with your answer', 'Follow for more', 'Content Creators'],
-        ['Industry News Roundup', 'LinkedIn', 'Post', 'Top digital marketing news this week.', '#MarketingNews #IndustryUpdate #LinkedIn', baseDate, '08:00', 'Q1 Brand Awareness', 'scheduled', '', 'Comment your thoughts', 'Stay informed', 'Business Owners'],
-        ['Fun Friday Poll', 'Instagram', 'Story', 'Which platform do you prefer for ads?', '#Poll #SocialMedia #Marketing', baseDate, '12:00', 'Q1 Engagement', 'scheduled', '', 'Vote now', 'Follow', 'Social Media Managers']
+        ['Monday Morning Motivation', 'Start your week with digital marketing motivation!', 'Instagram', 'Post', 'Start your week with purpose!', '#MondayMotivation #DigitalMarketing', baseDate, '09:00', 'Q1 Brand Awareness', 'scheduled', '', '', '', 'Engage with comments', 'Follow for more tips', 'Small Business Owners'],
+        ['SEO Tips Tuesday', 'Weekly SEO tips to boost rankings.', 'LinkedIn', 'Post', '5 SEO tips that will boost your rankings this week.', '#SEO #SearchEngineOptimization #Marketing', baseDate, '10:00', 'Q1 Brand Awareness', 'scheduled', '', '', '', 'Share in comments', 'Learn more', 'Marketing Professionals'],
+        ['Client Success Story', 'See how we helped TechStart Kenya grow 300%.', 'Facebook', 'Post', 'See how we helped TechStart Kenya grow 300%.', '#SuccessStory #ClientLove #DigitalMarketing', baseDate, '14:00', 'Q1 Brand Awareness', 'scheduled', '', '', '', 'Tag a friend who needs this', 'Get started', 'Entrepreneurs'],
+        ['Quick Reel: Behind the Scenes', 'A day in the life at Nova360 Digital.', 'Instagram', 'Reel', 'A day in the life at Nova360 Digital.', '#BehindTheScenes #AgencyLife #Reels', baseDate, '16:00', 'Q1 Brand Awareness', 'scheduled', '', '', '', 'Follow our journey', 'Join us', 'Young Professionals'],
+        ['Wednesday Wisdom', 'Why your brand needs a content calendar.', 'TikTok', 'Video', 'Why your brand needs a content calendar.', '#MarketingTips #ContentCalendar #SmallBiz', baseDate, '11:00', 'Q1 Brand Awareness', 'scheduled', '', '', '', 'Duet with your answer', 'Follow for more', 'Content Creators'],
+        ['Industry News Roundup', 'Top digital marketing news this week.', 'LinkedIn', 'Post', 'Top digital marketing news this week.', '#MarketingNews #IndustryUpdate #LinkedIn', baseDate, '08:00', 'Q1 Brand Awareness', 'scheduled', '', '', '', 'Comment your thoughts', 'Stay informed', 'Business Owners'],
+        ['Fun Friday Poll', 'Interactive poll for social media managers.', 'Instagram', 'Story', 'Which platform do you prefer for ads?', '#Poll #SocialMedia #Marketing', baseDate, '12:00', 'Q1 Engagement', 'scheduled', '', '', '', 'Vote now', 'Follow', 'Social Media Managers'],
+        ['Digital Marketing in 5 Minutes', 'Learn the fundamentals of digital marketing in this quick educational video.', 'YouTube', 'Educational Video', 'Digital Marketing in 5 Minutes | What Is Digital Marketing? | Learn Digital Marketing', '#DigitalMarketing #Marketing #SEO', baseDate, '00:00', 'Learning Series', 'published', 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80', 'https://youtu.be/bixR-KIJKYM', '', 'Watch and learn the basics of digital marketing.', 'beginners, digital marketing, education', 'General Audience']
       ];
-      const stmt = db.prepare('INSERT INTO content_calendar (title, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status, media_url, notes, cta, target_audience) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+      const stmt = db.prepare('INSERT INTO content_calendar (title, description, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status, media_url, video_url, blog_id, cta, notes, target_audience) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
       calendarItems.forEach(item => stmt.run(item));
       stmt.finalize();
+    }
+  });
+
+  db.get('SELECT COUNT(*) as count FROM site_settings', (err, row) => {
+    if (err || !row || row.count === 0) {
+      db.run(
+        'INSERT INTO site_settings (featured_video_url, featured_video_title, featured_video_description) VALUES (?, ?, ?)',
+        ['https://youtu.be/bixR-KIJKYM', 'Digital Marketing in 5 Minutes', 'A quick introduction to the fundamentals of digital marketing.']
+      );
     }
   });
 });
@@ -508,17 +548,17 @@ app.get('/api/blog', (req, res) => {
   });
 });
 
+app.get('/api/blog/all', authenticate, adminOnly, (req, res) => {
+  db.all('SELECT * FROM blog_posts ORDER BY updated_at DESC', (err, rows) => {
+    if (err) return res.status(500).json({ error: 'Database error' });
+    res.json(rows);
+  });
+});
+
 app.get('/api/blog/:slug', (req, res) => {
   db.get('SELECT * FROM blog_posts WHERE slug = ?', [req.params.slug], (err, row) => {
     if (err || !row) return res.status(404).json({ error: 'Post not found' });
     res.json(row);
-  });
-});
-
-app.get('/api/blog/all', authenticate, adminOnly, (req, res) => {
-  db.all('SELECT * FROM blog_posts ORDER BY updated_at DESC', (err, rows) => {
-    if (err) return res.status(500).json({ error: err.message });
-    res.json(rows);
   });
 });
 
@@ -704,6 +744,32 @@ app.put('/api/seo/:page', authenticate, adminOnly, (req, res) => {
   );
 });
 
+app.get('/api/site-settings', (req, res) => {
+  db.get('SELECT * FROM site_settings LIMIT 1', (err, row) => {
+    if (err) return res.status(500).json({ error: err.message });
+    if (!row) {
+      return res.json({
+        featured_video_url: 'https://youtu.be/bixR-KIJKYM',
+        featured_video_title: 'Digital Marketing in 5 Minutes',
+        featured_video_description: 'A quick introduction to the fundamentals of digital marketing.'
+      });
+    }
+    res.json(row);
+  });
+});
+
+app.put('/api/site-settings', authenticate, adminOnly, (req, res) => {
+  const { featured_video_url, featured_video_title, featured_video_description } = req.body;
+  db.run(
+    'UPDATE site_settings SET featured_video_url = ?, featured_video_title = ?, featured_video_description = ?, updated_at = CURRENT_TIMESTAMP WHERE id = 1',
+    [featured_video_url, featured_video_title, featured_video_description],
+    function (err) {
+      if (err) return res.status(400).json({ error: err.message });
+      res.json({ featured_video_url, featured_video_title, featured_video_description });
+    }
+  );
+});
+
 app.get('/api/calendar', authenticate, (req, res) => {
   const { status, platform, campaign } = req.query;
   let query = 'SELECT * FROM content_calendar WHERE 1=1';
@@ -730,11 +796,23 @@ app.get('/api/calendar', authenticate, (req, res) => {
   });
 });
 
+app.get('/api/calendar/upcoming', authenticate, adminOnly, (req, res) => {
+  const today = new Date().toISOString().split('T')[0];
+  db.all(
+    `SELECT * FROM content_calendar WHERE status IN ('idea', 'draft', 'scheduled') AND scheduled_date >= ? ORDER BY scheduled_date ASC, scheduled_time ASC LIMIT 10`,
+    [today],
+    (err, rows) => {
+      if (err) return res.status(500).json({ error: err.message });
+      res.json(rows);
+    }
+  );
+});
+
 app.post('/api/calendar', authenticate, adminOnly, (req, res) => {
-  const { title, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status, media_url, notes, cta, target_audience } = req.body;
+  const { title, description, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status, media_url, video_url, blog_id, cta, notes, target_audience } = req.body;
   db.run(
-    'INSERT INTO content_calendar (title, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status, media_url, notes, cta, target_audience) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-    [title, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status || 'idea', media_url, notes, cta, target_audience],
+    'INSERT INTO content_calendar (title, description, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status, media_url, video_url, blog_id, cta, notes, target_audience) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [title, description || '', platform, content_type, caption || '', hashtags || '', scheduled_date || '', scheduled_time || '', campaign || '', status || 'idea', media_url || '', video_url || '', blog_id || null, cta || '', notes || '', target_audience || ''],
     function (err) {
       if (err) return res.status(400).json({ error: err.message });
       res.status(201).json({ id: this.lastID, title, platform, content_type, status });
@@ -743,10 +821,10 @@ app.post('/api/calendar', authenticate, adminOnly, (req, res) => {
 });
 
 app.put('/api/calendar/:id', authenticate, adminOnly, (req, res) => {
-  const { title, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status, media_url, notes, cta, target_audience } = req.body;
+  const { title, description, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status, media_url, video_url, blog_id, cta, notes, target_audience } = req.body;
   db.run(
-    'UPDATE content_calendar SET title = ?, platform = ?, content_type = ?, caption = ?, hashtags = ?, scheduled_date = ?, scheduled_time = ?, campaign = ?, status = ?, media_url = ?, notes = ?, cta = ?, target_audience = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
-    [title, platform, content_type, caption, hashtags, scheduled_date, scheduled_time, campaign, status, media_url, notes, cta, target_audience, req.params.id],
+    'UPDATE content_calendar SET title = ?, description = ?, platform = ?, content_type = ?, caption = ?, hashtags = ?, scheduled_date = ?, scheduled_time = ?, campaign = ?, status = ?, media_url = ?, video_url = ?, blog_id = ?, cta = ?, notes = ?, target_audience = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?',
+    [title, description || '', platform, content_type, caption || '', hashtags || '', scheduled_date || '', scheduled_time || '', campaign || '', status, media_url || '', video_url || '', blog_id || null, cta || '', notes || '', target_audience || '', req.params.id],
     function (err) {
       if (err) return res.status(400).json({ error: err.message });
       res.json({ id: req.params.id, title, platform, content_type, status });
@@ -835,7 +913,11 @@ app.get('/api/analytics', authenticate, adminOnly, (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).json({ error: 'Not found' });
+  if (fs.existsSync(path.join(clientBuildPath, 'index.html'))) {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  } else {
+    res.status(404).json({ error: 'Not found' });
+  }
 });
 
 app.use((err, req, res, next) => {

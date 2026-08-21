@@ -1,17 +1,25 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { get } from '../services/api';
+import FeaturedVideo from '../components/FeaturedVideo';
 import './Blog.css';
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [settings, setSettings] = useState(null);
 
   useEffect(() => {
-    get('/api/blog')
-      .then(setPosts)
-      .catch(() => setLoading(false))
-      .finally(() => setLoading(false));
+    Promise.all([
+      get('/api/blog'),
+      get('/api/site-settings')
+    ])
+      .then(([blogPosts, siteSettings]) => {
+        setPosts(blogPosts);
+        setSettings(siteSettings);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
   if (loading) return <div className="loading">Loading...</div>;
@@ -24,6 +32,18 @@ export default function Blog() {
           <p>Insights, tips, and strategies to help you stay ahead in the digital marketing landscape.</p>
         </div>
       </section>
+
+      {settings && settings.featured_video_url && (
+        <section className="blog-video-section">
+          <div className="container">
+            <FeaturedVideo
+              title={settings.featured_video_title}
+              description={settings.featured_video_description}
+              youtubeUrl={settings.featured_video_url}
+            />
+          </div>
+        </section>
+      )}
 
       <section className="blog-list">
         <div className="container">
