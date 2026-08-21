@@ -5,11 +5,13 @@
 }
 
 .calendar-filters select {
-  padding: 8px 14px;
+  padding: 10px 14px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background-color: var(--cream-light);
+  background-color: var(--white);
   min-width: 180px;
+  color: var(--text);
+  font-size: 0.95rem;
 }
 
 .calendar-list {
@@ -19,7 +21,7 @@
 }
 
 .calendar-item {
-  background-color: var(--cream-light);
+  background-color: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 20px;
@@ -34,6 +36,8 @@
 
 .calendar-item-header h3 {
   font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .calendar-item-meta {
@@ -49,4 +53,5 @@
   color: var(--text-light);
   line-height: 1.6;
   margin-bottom: 12px;
+  font-size: 0.95rem;
 }

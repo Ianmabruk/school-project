@@ -1,21 +1,24 @@
 .admin-page h1 {
-  font-size: 2rem;
+  font-size: 1.75rem;
+  font-weight: 700;
   margin-bottom: 8px;
+  color: var(--text);
 }
 
 .admin-subtitle {
   color: var(--text-muted);
   margin-bottom: 24px;
+  font-size: 0.95rem;
 }
 
 .admin-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .admin-card {
-  background-color: var(--cream-light);
+  background-color: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 24px;
@@ -29,7 +32,9 @@
 }
 
 .admin-card-header h3 {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .slug {
@@ -42,6 +47,7 @@
   color: var(--text-light);
   margin-bottom: 16px;
   line-height: 1.6;
+  font-size: 0.95rem;
 }
 
 .admin-form {
@@ -55,6 +61,7 @@
   margin-bottom: 6px;
   font-weight: 500;
   font-size: 0.9rem;
+  color: var(--text-light);
 }
 
 .form-actions {
@@ -64,6 +71,6 @@
 }
 
 .form-actions button {
-  padding: 8px 16px;
+  padding: 10px 20px;
   font-size: 0.9rem;
 }

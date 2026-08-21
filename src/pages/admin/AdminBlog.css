@@ -4,6 +4,21 @@
   gap: 16px;
 }
 
+.admin-form-card {
+  background-color: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.admin-form-card h2 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
 .admin-card-actions {
   display: flex;
   gap: 12px;

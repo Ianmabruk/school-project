@@ -32,10 +32,10 @@ export default function Blog() {
               <article key={post.id} className="blog-card">
                 <div className="blog-image">
                   <div className="blog-placeholder">
-                    <svg viewBox="0 0 300 200" fill="none">
-                      <rect width="300" height="200" fill="var(--cream-dark)" rx="8"/>
-                      <rect x="100" y="70" width="100" height="60" rx="8" fill="var(--orange)" opacity="0.2"/>
-                    </svg>
+                      <svg viewBox="0 0 300 200" fill="none">
+                        <rect width="300" height="200" fill="var(--vanilla)" rx="8"/>
+                        <rect x="100" y="70" width="100" height="60" rx="8" fill="var(--text)" opacity="0.06"/>
+                      </svg>
                   </div>
                 </div>
                 <div className="blog-content">

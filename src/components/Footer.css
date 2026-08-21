@@ -1,40 +1,43 @@
 .footer {
-  background-color: #2D1F14;
-  color: var(--cream);
-  padding: 60px 0 0;
-  margin-top: 80px;
+  background-color: var(--vanilla);
+  border-top: 1px solid var(--border);
+  padding: 64px 0 32px;
 }
 
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
 }
 
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 40px;
-  padding-bottom: 40px;
-  border-bottom: 1px solid rgba(255, 244, 227, 0.1);
+  gap: 48px;
+  margin-bottom: 48px;
 }
 
 .footer-brand h3 {
-  color: var(--orange);
-  margin-bottom: 16px;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text);
 }
 
 .footer-brand p {
-  color: rgba(255, 244, 227, 0.7);
+  font-size: 0.9rem;
+  color: var(--text-muted);
   line-height: 1.7;
 }
 
 .footer-links h4,
 .footer-social h4 {
-  color: var(--orange);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
   margin-bottom: 16px;
-  font-size: 1rem;
 }
 
 .footer-links ul {
@@ -46,12 +49,12 @@
 }
 
 .footer-links a {
-  color: rgba(255, 244, 227, 0.7);
-  transition: color 0.2s;
+  font-size: 0.9rem;
+  color: var(--text-light);
 }
 
 .footer-links a:hover {
-  color: var(--orange);
+  color: var(--text);
 }
 
 .social-icons {
@@ -61,24 +64,28 @@
 }
 
 .social-icons a {
-  color: rgba(255, 244, 227, 0.7);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
   padding: 6px 12px;
-  border: 1px solid rgba(255, 244, 227, 0.2);
+  border: 1px solid var(--border);
   border-radius: 6px;
-  transition: all 0.2s;
+  background-color: var(--white);
 }
 
 .social-icons a:hover {
-  color: var(--orange);
-  border-color: var(--orange);
+  color: var(--text);
+  border-color: var(--text-muted);
 }
 
 .footer-bottom {
-  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  padding-top: 24px;
   text-align: center;
-  color: rgba(255, 244, 227, 0.5);
+}
+
+.footer-bottom p {
   font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 @media (max-width: 768px) {

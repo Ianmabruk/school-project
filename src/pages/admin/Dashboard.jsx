@@ -24,12 +24,12 @@ export default function Dashboard() {
   if (loading) return <div className="loading">Loading dashboard...</div>;
 
   const statCards = [
-    { label: 'Total Blog Posts', value: stats?.total_posts || 0, link: '/admin/blog', color: 'var(--orange)' },
-    { label: 'Published Posts', value: stats?.published_posts || 0, link: '/admin/blog', color: 'var(--success)' },
-    { label: 'Scheduled Content', value: stats?.scheduled_items || 0, link: '/admin/calendar', color: '#1976D2' },
+    { label: 'Total Blog Posts', value: stats?.total_posts || 0, link: '/admin/blog', color: 'var(--text)' },
+    { label: 'Published Posts', value: stats?.published_posts || 0, link: '/admin/blog', color: 'var(--text)' },
+    { label: 'Scheduled Content', value: stats?.scheduled_items || 0, link: '/admin/calendar', color: 'var(--text-muted)' },
     { label: 'Draft Content', value: stats?.draft_items || 0, link: '/admin/calendar', color: 'var(--text-muted)' },
-    { label: 'Services', value: stats?.total_services || 0, link: '/admin/services', color: 'var(--orange)' },
-    { label: 'Testimonials', value: stats?.total_testimonials || 0, link: '/admin/testimonials', color: 'var(--orange)' }
+    { label: 'Services', value: stats?.total_services || 0, link: '/admin/services', color: 'var(--text)' },
+    { label: 'Testimonials', value: stats?.total_testimonials || 0, link: '/admin/testimonials', color: 'var(--text)' }
   ];
 
   return (

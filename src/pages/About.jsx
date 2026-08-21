@@ -22,10 +22,10 @@ export default function About() {
             <div className="story-image">
               <div className="image-placeholder">
                 <svg viewBox="0 0 400 300" fill="none">
-                  <rect width="400" height="300" fill="var(--cream-dark)" rx="12"/>
-                  <circle cx="200" cy="120" r="60" fill="var(--orange)" opacity="0.15"/>
-                  <rect x="140" y="190" width="120" height="10" rx="5" fill="var(--orange)" opacity="0.3"/>
-                  <rect x="160" y="210" width="80" height="6" rx="3" fill="var(--text-muted)" opacity="0.2"/>
+                  <rect width="400" height="300" fill="var(--vanilla)" rx="12"/>
+                  <circle cx="200" cy="120" r="60" fill="var(--text)" opacity="0.06"/>
+                  <rect x="140" y="190" width="120" height="10" rx="5" fill="var(--text)" opacity="0.1"/>
+                  <rect x="160" y="210" width="80" height="6" rx="3" fill="var(--text-muted)" opacity="0.08"/>
                 </svg>
               </div>
             </div>

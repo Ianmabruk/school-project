@@ -1,68 +1,64 @@
+.services-page {
+  min-height: 100vh;
+}
+
 .services-hero {
-  background-color: var(--cream);
-  padding: 80px 0;
+  padding: 100px 0 80px;
+  background-color: var(--white);
   text-align: center;
-  border-bottom: 1px solid var(--border);
 }
 
 .services-hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 16px;
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+  letter-spacing: -0.02em;
 }
 
 .services-hero p {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  max-width: 600px;
+  font-size: 1.15rem;
+  color: var(--text-light);
+  max-width: 640px;
   margin: 0 auto;
+  line-height: 1.7;
 }
 
 .services-list {
-  padding: 80px 0;
-  background-color: var(--cream);
+  padding: 100px 0;
+  background-color: var(--vanilla);
 }
 
 .services-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
 }
 
-.service-card {
-  background-color: var(--cream-light);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 32px;
-  transition: all 0.2s;
-}
-
-.service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px var(--shadow);
-}
-
 .service-card h2 {
-  font-size: 1.35rem;
-  margin-bottom: 12px;
-  color: var(--orange);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text);
 }
 
 .service-card p {
   color: var(--text-light);
   line-height: 1.7;
   margin-bottom: 16px;
+  font-size: 0.95rem;
 }
 
 .service-features {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
+  text-align: left;
 }
 
 .service-features li {
-  padding: 8px 0;
-  padding-left: 24px;
-  position: relative;
+  padding: 10px 0;
   color: var(--text-light);
+  font-size: 0.95rem;
   border-bottom: 1px solid var(--border);
 }
 
@@ -71,89 +67,90 @@
 }
 
 .service-features li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
-  color: var(--orange);
-  font-weight: 700;
+  content: "—";
+  margin-right: 12px;
+  color: var(--text-muted);
 }
 
 .services-testimonials {
-  padding: 80px 0;
-  background-color: var(--cream-light);
+  padding: 100px 0;
+  background-color: var(--white);
 }
 
 .services-testimonials h2 {
-  text-align: center;
   font-size: 2rem;
+  font-weight: 700;
   margin-bottom: 48px;
+  text-align: center;
+  color: var(--text);
 }
 
-.testimonials-grid {
+.services-testimonials .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
 }
 
-.testimonial-card {
-  background-color: var(--cream);
+.services-testimonials .testimonial-card {
+  background-color: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 28px;
 }
 
-.testimonial-card p {
+.services-testimonials .testimonial-card p {
   font-style: italic;
   color: var(--text-light);
   line-height: 1.7;
   margin-bottom: 20px;
 }
 
-.testimonial-author strong {
+.services-testimonials .testimonial-author strong {
   display: block;
   color: var(--text);
   margin-bottom: 4px;
 }
 
-.testimonial-author span {
+.services-testimonials .testimonial-author span {
   color: var(--text-muted);
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .services-cta {
-  padding: 80px 0;
-  background-color: var(--cream);
+  padding: 100px 0;
+  background-color: var(--vanilla);
 }
 
 .services-cta .cta-box {
-  background-color: var(--orange);
-  color: white;
-  padding: 60px 40px;
-  border-radius: 16px;
-  text-align: center;
+  background-color: var(--white);
+  border: 1px solid var(--border);
 }
 
 .services-cta .cta-box h2 {
-  color: white;
-  margin-bottom: 16px;
+  color: var(--text);
 }
 
 .services-cta .cta-box p {
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 32px;
-  font-size: 1.1rem;
+  color: var(--text-light);
 }
 
 .services-cta .btn-primary {
-  background-color: white;
-  color: var(--orange);
+  background-color: var(--text);
+  color: var(--white);
 }
 
 .services-cta .btn-primary:hover {
-  background-color: var(--cream);
+  background-color: var(--text-light);
 }
 
 @media (max-width: 768px) {
+  .services-hero,
+  .services-list,
+  .services-testimonials,
+  .services-cta {
+    padding: 64px 0;
+  }
+
   .services-hero h1 {
     font-size: 2rem;
   }

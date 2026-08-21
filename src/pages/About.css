@@ -1,37 +1,45 @@
+.about {
+  min-height: 100vh;
+}
+
 .about-hero {
-  background-color: var(--cream);
-  padding: 80px 0;
+  padding: 100px 0 80px;
+  background-color: var(--white);
   text-align: center;
-  border-bottom: 1px solid var(--border);
 }
 
 .about-hero h1 {
-  font-size: 2.5rem;
-  margin-bottom: 16px;
+  font-size: 2.75rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text);
+  letter-spacing: -0.02em;
 }
 
 .about-hero p {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  max-width: 600px;
+  font-size: 1.15rem;
+  color: var(--text-light);
+  max-width: 640px;
   margin: 0 auto;
+  line-height: 1.7;
 }
 
 .about-story {
-  padding: 80px 0;
-  background-color: var(--cream);
+  padding: 100px 0;
+  background-color: var(--vanilla);
 }
 
 .story-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 64px;
   align-items: center;
 }
 
 .story-content h2 {
   font-size: 2rem;
-  margin-bottom: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
   color: var(--text);
 }
 
@@ -39,6 +47,7 @@
   color: var(--text-light);
   line-height: 1.8;
   margin-bottom: 16px;
+  font-size: 1.05rem;
 }
 
 .story-image {
@@ -46,16 +55,27 @@
   justify-content: center;
 }
 
-.image-placeholder svg {
+.image-placeholder {
   width: 100%;
   max-width: 400px;
+  aspect-ratio: 4/3;
+  background-color: var(--white);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-placeholder svg {
+  width: 60%;
   height: auto;
-  border-radius: 12px;
+  opacity: 0.5;
 }
 
 .about-mission {
-  padding: 80px 0;
-  background-color: var(--cream-light);
+  padding: 100px 0;
+  background-color: var(--white);
 }
 
 .mission-grid {
@@ -65,86 +85,85 @@
 }
 
 .mission-card {
-  background-color: var(--cream);
+  background-color: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 32px;
 }
 
 .mission-card h3 {
-  color: var(--orange);
+  font-size: 1.15rem;
+  font-weight: 600;
   margin-bottom: 16px;
-  font-size: 1.25rem;
+  color: var(--text);
 }
 
-.mission-card p,
-.mission-card ul {
+.mission-card p {
   color: var(--text-light);
   line-height: 1.7;
+  font-size: 0.95rem;
 }
 
 .mission-card ul {
   list-style: none;
-  padding-left: 0;
+  padding: 0;
 }
 
 .mission-card li {
-  padding: 6px 0;
-  padding-left: 20px;
-  position: relative;
+  padding: 8px 0;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  border-bottom: 1px solid var(--border);
 }
 
-.mission-card li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 14px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: var(--orange);
+.mission-card li:last-child {
+  border-bottom: none;
 }
 
 .about-cta {
-  padding: 80px 0;
-  background-color: var(--cream);
+  padding: 100px 0;
+  background-color: var(--vanilla);
 }
 
 .about-cta .cta-box {
-  background-color: var(--orange);
-  color: white;
-  padding: 60px 40px;
-  border-radius: 16px;
-  text-align: center;
+  background-color: var(--white);
+  border: 1px solid var(--border);
 }
 
 .about-cta .cta-box h2 {
-  color: white;
-  margin-bottom: 16px;
+  color: var(--text);
 }
 
 .about-cta .cta-box p {
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 32px;
-  font-size: 1.1rem;
+  color: var(--text-light);
 }
 
 .about-cta .btn-primary {
-  background-color: white;
-  color: var(--orange);
+  background-color: var(--text);
+  color: var(--white);
 }
 
 .about-cta .btn-primary:hover {
-  background-color: var(--cream);
+  background-color: var(--text-light);
 }
 
 @media (max-width: 768px) {
+  .about-hero {
+    padding: 80px 0 60px;
+  }
+
+  .about-hero h1 {
+    font-size: 2rem;
+  }
+
   .story-grid {
     grid-template-columns: 1fr;
     gap: 40px;
   }
 
-  .about-hero h1 {
-    font-size: 2rem;
+  .about-story,
+  .about-mission,
+  .about-cta {
+    padding: 64px 0;
   }
 }

@@ -313,6 +313,10 @@ db.serialize(() => {
   });
 });
 
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok' });
+});
+
 app.post('/api/auth/login', (req, res) => {
   const { email, password } = req.body;
 
@@ -734,25 +738,25 @@ app.put('/api/contact/:id', authenticate, adminOnly, (req, res) => {
 
 app.get('/api/analytics', authenticate, adminOnly, (req, res) => {
   db.all('SELECT COUNT(*) as total_posts FROM blog_posts', (err, posts) => {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err) return res.status(500).json({ error: 'Database error' });
     
     db.all('SELECT COUNT(*) as published_posts FROM blog_posts WHERE status = "published"', (err2, published) => {
-      if (err2) return res.status(500).json({ error: err2.message });
+      if (err2) return res.status(500).json({ error: 'Database error' });
       
       db.all('SELECT COUNT(*) as total_services FROM services WHERE is_active = 1', (err3, services) => {
-        if (err3) return res.status(500).json({ error: err3.message });
+        if (err3) return res.status(500).json({ error: 'Database error' });
         
         db.all('SELECT COUNT(*) as total_testimonials FROM testimonials WHERE is_active = 1', (err4, testimonials) => {
-          if (err4) return res.status(500).json({ error: err4.message });
+          if (err4) return res.status(500).json({ error: 'Database error' });
           
           db.all('SELECT COUNT(*) as total_calendar_items FROM content_calendar', (err5, calendar) => {
-            if (err5) return res.status(500).json({ error: err5.message });
+            if (err5) return res.status(500).json({ error: 'Database error' });
             
             db.all('SELECT COUNT(*) as scheduled_items FROM content_calendar WHERE status = "scheduled"', (err6, scheduled) => {
-              if (err6) return res.status(500).json({ error: err6.message });
+              if (err6) return res.status(500).json({ error: 'Database error' });
               
               db.all('SELECT COUNT(*) as draft_items FROM content_calendar WHERE status = "draft"', (err7, drafts) => {
-                if (err7) return res.status(500).json({ error: err7.message });
+                if (err7) return res.status(500).json({ error: 'Database error' });
                 
                 res.json({
                   total_posts: posts[0].total_posts,
@@ -770,6 +774,15 @@ app.get('/api/analytics', authenticate, adminOnly, (req, res) => {
       });
     });
   });
+});
+
+app.use((req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong' });
 });
 
 app.listen(PORT, () => {

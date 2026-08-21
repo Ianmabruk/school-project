@@ -3,18 +3,18 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--cream);
+  background-color: var(--white);
   padding: 20px;
 }
 
 .login-card {
-  background-color: var(--cream-light);
+  background-color: var(--white);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 40px;
   width: 100%;
   max-width: 420px;
-  box-shadow: 0 8px 30px var(--shadow);
+  box-shadow: 0 4px 20px var(--shadow);
 }
 
 .login-header {
@@ -23,8 +23,9 @@
 }
 
 .login-header h1 {
-  color: var(--orange);
-  font-size: 1.75rem;
+  color: var(--text);
+  font-size: 1.5rem;
+  font-weight: 700;
   margin-bottom: 8px;
 }
 
@@ -38,6 +39,17 @@
   padding: 14px;
   font-size: 1rem;
   margin-top: 8px;
+  background-color: var(--text);
+  color: var(--white);
+}
+
+.login-btn:hover {
+  background-color: var(--text-light);
+}
+
+.login-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .login-footer {

@@ -1,5 +1,5 @@
 .admin-form-card {
-  background-color: var(--cream-light);
+  background-color: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 24px;
@@ -7,8 +7,10 @@
 }
 
 .admin-form-card h2 {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
+  font-weight: 600;
   margin-bottom: 20px;
+  color: var(--text);
 }
 
 .admin-card-actions {

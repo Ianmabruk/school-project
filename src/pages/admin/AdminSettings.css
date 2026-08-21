@@ -1,5 +1,5 @@
 .settings-section {
-  background-color: var(--cream-light);
+  background-color: var(--white);
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 24px;
@@ -7,9 +7,10 @@
 }
 
 .settings-section h2 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   margin-bottom: 20px;
-  color: var(--orange);
+  color: var(--text);
 }
 
 .form-hint {

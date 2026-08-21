@@ -39,14 +39,14 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-image">
-            <div className="hero-placeholder">
-              <svg viewBox="0 0 400 300" fill="none">
-                <rect width="400" height="300" fill="var(--cream-dark)" rx="12"/>
-                <circle cx="200" cy="120" r="50" fill="var(--orange)" opacity="0.2"/>
-                <rect x="120" y="180" width="160" height="12" rx="6" fill="var(--orange)" opacity="0.3"/>
-                <rect x="140" y="200" width="120" height="8" rx="4" fill="var(--text-muted)" opacity="0.2"/>
-              </svg>
-            </div>
+              <div className="hero-placeholder">
+                <svg viewBox="0 0 400 300" fill="none">
+                  <rect width="400" height="300" fill="var(--vanilla)" rx="12"/>
+                  <circle cx="200" cy="120" r="50" fill="var(--text)" opacity="0.08"/>
+                  <rect x="120" y="180" width="160" height="12" rx="6" fill="var(--text)" opacity="0.1"/>
+                  <rect x="140" y="200" width="120" height="8" rx="4" fill="var(--text-muted)" opacity="0.1"/>
+                </svg>
+              </div>
           </div>
         </div>
       </section>
@@ -66,7 +66,7 @@ export default function Home() {
             {services.map(service => (
               <div key={service.id} className="service-card">
                 <div className="service-icon">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth="2">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--text)" strokeWidth="2">
                     <circle cx="12" cy="12" r="10"/>
                     <path d="M12 6v6l4 2"/>
                   </svg>
@@ -110,11 +110,11 @@ export default function Home() {
           <p className="section-subtitle">Watch how we transform brands through digital marketing.</p>
           <div className="video-placeholder">
             <div className="video-box">
-              <svg viewBox="0 0 600 340" fill="none">
-                <rect width="600" height="340" fill="var(--cream-dark)" rx="12"/>
-                <circle cx="300" cy="170" r="40" fill="var(--orange)" opacity="0.3"/>
-                <polygon points="292,155 292,185 315,170" fill="var(--orange)"/>
-              </svg>
+               <svg viewBox="0 0 600 340" fill="none">
+                  <rect width="600" height="340" fill="var(--vanilla)" rx="12"/>
+                  <circle cx="300" cy="170" r="40" fill="var(--text)" opacity="0.08"/>
+                  <polygon points="292,155 292,185 315,170" fill="var(--text)" opacity="0.2"/>
+                </svg>
               <p className="video-text">Promotional Video Coming Soon</p>
             </div>
           </div>
@@ -130,10 +130,10 @@ export default function Home() {
               <article key={post.id} className="blog-card">
                 <div className="blog-image">
                   <div className="blog-placeholder">
-                    <svg viewBox="0 0 300 200" fill="none">
-                      <rect width="300" height="200" fill="var(--cream-dark)" rx="8"/>
-                      <rect x="100" y="70" width="100" height="60" rx="8" fill="var(--orange)" opacity="0.2"/>
-                    </svg>
+                      <svg viewBox="0 0 300 200" fill="none">
+                        <rect width="300" height="200" fill="var(--vanilla)" rx="8"/>
+                        <rect x="100" y="70" width="100" height="60" rx="8" fill="var(--text)" opacity="0.06"/>
+                      </svg>
                   </div>
                 </div>
                 <div className="blog-content">

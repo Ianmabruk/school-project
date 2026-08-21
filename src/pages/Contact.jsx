@@ -57,9 +57,9 @@ export default function Contact() {
               <div className="contact-map">
                 <div className="map-placeholder">
                   <svg viewBox="0 0 400 200" fill="none">
-                    <rect width="400" height="200" fill="var(--cream-dark)" rx="8"/>
-                    <circle cx="200" cy="100" r="30" fill="var(--orange)" opacity="0.3"/>
-                    <circle cx="200" cy="100" r="8" fill="var(--orange)"/>
+                    <rect width="400" height="200" fill="var(--vanilla)" rx="8"/>
+                    <circle cx="200" cy="100" r="30" fill="var(--text)" opacity="0.08"/>
+                    <circle cx="200" cy="100" r="8" fill="var(--text)" opacity="0.15"/>
                   </svg>
                   <p>Google Maps Integration</p>
                 </div>

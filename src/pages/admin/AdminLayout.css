@@ -1,13 +1,13 @@
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background-color: var(--cream);
+  background-color: var(--white);
 }
 
 .admin-sidebar {
   width: 260px;
-  background-color: #2D1F14;
-  color: var(--cream);
+  background-color: var(--vanilla);
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -19,12 +19,14 @@
 
 .sidebar-header {
   padding: 24px 20px;
-  border-bottom: 1px solid rgba(255, 244, 227, 0.1);
+  border-bottom: 1px solid var(--border);
 }
 
 .sidebar-header h2 {
-  color: var(--orange);
-  font-size: 1.25rem;
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .sidebar-nav {
@@ -36,43 +38,45 @@
 .sidebar-link {
   display: block;
   padding: 12px 20px;
-  color: rgba(255, 244, 227, 0.7);
+  color: var(--text-light);
   transition: all 0.2s;
   border-left: 3px solid transparent;
+  font-size: 0.95rem;
 }
 
 .sidebar-link:hover,
 .sidebar-link.active {
-  color: var(--orange);
-  background-color: rgba(242, 140, 40, 0.1);
-  border-left-color: var(--orange);
+  color: var(--text);
+  background-color: var(--white);
+  border-left-color: var(--text);
 }
 
 .sidebar-footer {
   padding: 20px;
-  border-top: 1px solid rgba(255, 244, 227, 0.1);
+  border-top: 1px solid var(--border);
 }
 
 .sidebar-footer p {
   font-size: 0.9rem;
   margin-bottom: 12px;
-  color: rgba(255, 244, 227, 0.7);
+  color: var(--text-light);
+  font-weight: 500;
 }
 
 .sidebar-footer .logout-btn {
   width: 100%;
-  padding: 8px;
-  background-color: transparent;
-  color: var(--cream);
-  border: 1px solid rgba(255, 244, 227, 0.2);
-  border-radius: 6px;
-  font-size: 0.85rem;
+  padding: 10px;
+  background-color: var(--white);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.9rem;
 }
 
 .sidebar-footer .logout-btn:hover {
-  background-color: var(--orange);
-  border-color: var(--orange);
-  color: white;
+  background-color: var(--text);
+  color: var(--white);
+  border-color: var(--text);
 }
 
 .admin-main {
@@ -80,6 +84,7 @@
   margin-left: 260px;
   padding: 32px;
   min-height: 100vh;
+  background-color: var(--white);
 }
 
 @media (max-width: 768px) {
