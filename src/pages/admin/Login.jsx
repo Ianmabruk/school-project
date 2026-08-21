@@ -61,7 +61,7 @@ export default function Login() {
           </button>
         </form>
         <div className="login-footer">
-          <p>Default: admin@nova360digital.com / admin123</p>
+          <p>Don't have an account? <Link to="/admin/register">Register</Link></p>
         </div>
       </div>
     </div>

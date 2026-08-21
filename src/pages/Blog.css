@@ -49,9 +49,16 @@
 }
 
 .blog-image {
-  height: 180px;
+  height: 200px;
   overflow: hidden;
   background-color: var(--vanilla);
+}
+
+.blog-featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .blog-placeholder {

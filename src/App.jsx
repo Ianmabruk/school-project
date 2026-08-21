@@ -11,6 +11,7 @@ import BlogPost from './pages/BlogPost';
 import Contact from './pages/Contact';
 import Social from './pages/Social';
 import Login from './pages/admin/Login';
+import Register from './pages/admin/Register';
 import Dashboard from './pages/admin/Dashboard';
 import Pages from './pages/admin/Pages';
 import ServicesAdmin from './pages/admin/Services';
@@ -27,7 +28,7 @@ import './App.css';
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   if (loading) return <div className="loading">Loading...</div>;
-  if (!user) return <Navigate to="/admin" replace />;
+  if (!user) return <Navigate to="/admin/login" replace />;
   return children;
 }
 
@@ -46,7 +47,6 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/admin" element={<Login />} />
           <Route path="/" element={<PublicLayout><Home /></PublicLayout>} />
           <Route path="/about" element={<PublicLayout><About /></PublicLayout>} />
           <Route path="/services" element={<PublicLayout><Services /></PublicLayout>} />
@@ -54,6 +54,8 @@ function App() {
           <Route path="/blog/:slug" element={<PublicLayout><BlogPost /></PublicLayout>} />
           <Route path="/contact" element={<PublicLayout><Contact /></PublicLayout>} />
           <Route path="/social" element={<PublicLayout><Social /></PublicLayout>} />
+          <Route path="/admin/register" element={<Register />} />
+          <Route path="/admin/login" element={<Login />} />
           <Route path="/admin" element={<ProtectedRoute><AdminLayout /></ProtectedRoute>}>
             <Route index element={<Dashboard />} />
             <Route path="pages" element={<Pages />} />

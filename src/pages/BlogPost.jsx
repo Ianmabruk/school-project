@@ -36,6 +36,11 @@ export default function BlogPost() {
   return (
     <div className="blog-post-page">
       <article className="blog-post">
+        {post.featured_image && (
+          <div className="post-featured-image">
+            <img src={post.featured_image} alt={post.title} />
+          </div>
+        )}
         <header className="post-header">
           <div className="container">
             <Link to="/blog" className="back-link">← Back to Blog</Link>

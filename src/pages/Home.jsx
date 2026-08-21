@@ -8,6 +8,10 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  const heroImageUrl = 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&q=80';
 
   useEffect(() => {
     Promise.all([
@@ -39,6 +43,16 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-image">
+            {!imageError ? (
+              <img
+                src={heroImageUrl}
+                alt="Digital marketing team collaborating on strategy"
+                className={`hero-img ${imageLoaded ? 'loaded' : ''}`}
+                onLoad={() => setImageLoaded(true)}
+                onError={() => setImageError(true)}
+                loading="eager"
+              />
+            ) : (
               <div className="hero-placeholder">
                 <svg viewBox="0 0 400 300" fill="none">
                   <rect width="400" height="300" fill="var(--vanilla)" rx="12"/>
@@ -47,6 +61,7 @@ export default function Home() {
                   <rect x="140" y="200" width="120" height="8" rx="4" fill="var(--text-muted)" opacity="0.1"/>
                 </svg>
               </div>
+            )}
           </div>
         </div>
       </section>
@@ -129,12 +144,16 @@ export default function Home() {
             {posts.map(post => (
               <article key={post.id} className="blog-card">
                 <div className="blog-image">
-                  <div className="blog-placeholder">
+                  {post.featured_image ? (
+                    <img src={post.featured_image} alt={post.title} className="blog-featured-img" loading="lazy" />
+                  ) : (
+                    <div className="blog-placeholder">
                       <svg viewBox="0 0 300 200" fill="none">
                         <rect width="300" height="200" fill="var(--vanilla)" rx="8"/>
                         <rect x="100" y="70" width="100" height="60" rx="8" fill="var(--text)" opacity="0.06"/>
                       </svg>
-                  </div>
+                    </div>
+                  )}
                 </div>
                 <div className="blog-content">
                   <span className="blog-category">{post.category}</span>

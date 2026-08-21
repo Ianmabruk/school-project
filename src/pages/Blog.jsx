@@ -31,12 +31,16 @@ export default function Blog() {
             {posts.map(post => (
               <article key={post.id} className="blog-card">
                 <div className="blog-image">
-                  <div className="blog-placeholder">
+                  {post.featured_image ? (
+                    <img src={post.featured_image} alt={post.title} className="blog-featured-img" loading="lazy" />
+                  ) : (
+                    <div className="blog-placeholder">
                       <svg viewBox="0 0 300 200" fill="none">
                         <rect width="300" height="200" fill="var(--vanilla)" rx="8"/>
                         <rect x="100" y="70" width="100" height="60" rx="8" fill="var(--text)" opacity="0.06"/>
                       </svg>
-                  </div>
+                    </div>
+                  )}
                 </div>
                 <div className="blog-content">
                   <span className="blog-category">{post.category}</span>

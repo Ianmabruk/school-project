@@ -39,6 +39,37 @@
   align-items: center;
 }
 
+.hero-img {
+  width: 100%;
+  max-width: 560px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.hero-img.loaded {
+  opacity: 1;
+}
+
+.hero-placeholder {
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 4/3;
+  background-color: var(--vanilla);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-placeholder svg {
+  width: 60%;
+  height: auto;
+  opacity: 0.5;
+}
+
 .hero-placeholder {
   width: 100%;
   max-width: 480px;
