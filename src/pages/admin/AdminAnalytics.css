@@ -1,0 +1,38 @@
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.analytics-card {
+  background-color: var(--cream-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+}
+
+.analytics-value {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--orange);
+  margin-bottom: 8px;
+}
+
+.analytics-label {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.analytics-note {
+  background-color: var(--cream-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.analytics-note p {
+  color: var(--text-light);
+}

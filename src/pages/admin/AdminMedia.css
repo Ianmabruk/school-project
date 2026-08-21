@@ -1,0 +1,78 @@
+.upload-area {
+  margin-bottom: 32px;
+}
+
+.upload-label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: var(--orange);
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.upload-btn:hover {
+  background-color: var(--orange-dark);
+}
+
+.upload-label input:disabled + .upload-btn {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.media-card {
+  background-color: var(--cream-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.media-preview {
+  height: 150px;
+  overflow: hidden;
+  background-color: var(--cream-dark);
+}
+
+.media-preview img,
+.media-preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.media-info {
+  padding: 16px;
+}
+
+.media-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.media-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.delete-btn {
+  width: 100%;
+  padding: 6px;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,19 @@
+.seo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.seo-card {
+  background-color: var(--cream-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.seo-card h3 {
+  margin-bottom: 20px;
+  color: var(--orange);
+  font-size: 1.1rem;
+  text-transform: capitalize;
+}

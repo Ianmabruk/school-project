@@ -1,0 +1,52 @@
+.calendar-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.calendar-filters select {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--cream-light);
+  min-width: 180px;
+}
+
+.calendar-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.calendar-item {
+  background-color: var(--cream-light);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.calendar-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.calendar-item-header h3 {
+  font-size: 1.1rem;
+}
+
+.calendar-item-meta {
+  display: flex;
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.calendar-item p {
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}

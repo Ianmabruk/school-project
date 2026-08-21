@@ -1,0 +1,5 @@
+.item-role {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
