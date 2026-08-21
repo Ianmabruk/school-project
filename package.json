@@ -30,7 +30,7 @@
     "express": "^5.2.1",
     "globals": "^17.7.0",
     "jsonwebtoken": "^9.0.3",
-    "sqlite3": "^6.0.1",
+    "sqlite3": "^5.1.7",
     "vite": "^8.2.0"
   }
 }
