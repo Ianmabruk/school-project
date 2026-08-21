@@ -1,8 +1,8 @@
 services:
   - type: web
-    name: school-backend
+    name: school-backend-aur5
     runtime: node
-    buildCommand: npm ci && npm rebuild sqlite3 --build-from-source
+    buildCommand: npm ci
     startCommand: npm start
     envVars:
       - key: NODE_ENV
