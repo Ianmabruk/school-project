@@ -13,10 +13,14 @@ export function AuthProvider({ children }) {
       const decoded = JSON.parse(atob(token.split('.')[1]));
       return decoded;
     } catch {
+      localStorage.removeItem('token');
       return null;
     }
   });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    const token = localStorage.getItem('token');
+    return !!token;
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -25,13 +29,20 @@ export function AuthProvider({ children }) {
       fetch(`${API_URL}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       })
-        .then(res => res.ok ? res.json() : Promise.reject())
+        .then(res => {
+          if (!res.ok) throw new Error('Invalid token');
+          return res.json();
+        })
         .then(data => { if (!cancelled) setUser(data); })
-        .catch(() => { if (!cancelled) localStorage.removeItem('token'); })
+        .catch(() => {
+          if (!cancelled) {
+            localStorage.removeItem('token');
+            setUser(null);
+          }
+        })
         .finally(() => { if (!cancelled) setLoading(false); });
     } else {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (!cancelled) setLoading(false);
+      setLoading(false);
     }
     return () => { cancelled = true; };
   }, []);

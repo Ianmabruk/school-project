@@ -10,7 +10,7 @@
 .upload-btn {
   display: inline-block;
   padding: 12px 24px;
-  background-color: var(--text);
+  background-color: var(--accent);
   color: var(--white);
   border-radius: 8px;
   font-weight: 500;
@@ -19,7 +19,7 @@
 }
 
 .upload-btn:hover {
-  background-color: var(--text-light);
+  background-color: var(--accent-hover);
 }
 
 .upload-label input:disabled + .upload-btn {

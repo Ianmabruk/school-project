@@ -48,7 +48,7 @@
 .sidebar-link.active {
   color: var(--text);
   background-color: var(--white);
-  border-left-color: var(--text);
+  border-left-color: var(--accent);
 }
 
 .sidebar-footer {
@@ -66,17 +66,15 @@
 .sidebar-footer .logout-btn {
   width: 100%;
   padding: 10px;
-  background-color: var(--white);
-  color: var(--text);
-  border: 1px solid var(--border);
+  background-color: var(--accent);
+  color: var(--white);
+  border: none;
   border-radius: 8px;
   font-size: 0.9rem;
 }
 
 .sidebar-footer .logout-btn:hover {
-  background-color: var(--text);
-  color: var(--white);
-  border-color: var(--text);
+  background-color: var(--accent-hover);
 }
 
 .admin-main {

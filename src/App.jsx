@@ -26,9 +26,9 @@ import Settings from './pages/admin/Settings';
 import './App.css';
 
 function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth();
+  const { user, loading, isAdmin } = useAuth();
   if (loading) return <div className="loading">Loading...</div>;
-  if (!user) return <Navigate to="/admin/login" replace />;
+  if (!user || !isAdmin) return <Login />;
   return children;
 }
 

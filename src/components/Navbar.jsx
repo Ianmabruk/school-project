@@ -34,7 +34,7 @@ export default function Navbar() {
               <button onClick={logout} className="btn-secondary logout-btn">Logout</button>
             </>
           ) : (
-            <Link to="/admin" className="btn-primary admin-btn">Admin Login</Link>
+            <Link to="/admin/login" className="btn-primary admin-btn">Admin Login</Link>
           )}
         </div>
 

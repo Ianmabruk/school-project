@@ -39,12 +39,12 @@
   padding: 14px;
   font-size: 1rem;
   margin-top: 8px;
-  background-color: var(--text);
+  background-color: var(--accent);
   color: var(--white);
 }
 
 .login-btn:hover {
-  background-color: var(--text-light);
+  background-color: var(--accent-hover);
 }
 
 .login-btn:disabled {
